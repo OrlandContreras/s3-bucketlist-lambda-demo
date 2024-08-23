@@ -33,7 +33,7 @@ async fn get_bucket_list(s3_client: &s3::Client) -> Vec<String> {
 }
 
 // Function handler
-async fn function_handler(event: LambdaEvent<Request>) -> Result<Response, Error> {
+async fn lambda_handler(event: LambdaEvent<Request>) -> Result<Response, Error> {
     let _command = event.payload.command;
     // Get bucket s3 list
     let s3_client: s3::Client = get_s3_client().await;
@@ -53,5 +53,5 @@ async fn function_handler(event: LambdaEvent<Request>) -> Result<Response, Error
 async fn main() -> Result<(), Error> {
     tracing::init_default_subscriber();
 
-    run(service_fn(function_handler)).await
+    run(service_fn(lambda_handler)).await
 }
